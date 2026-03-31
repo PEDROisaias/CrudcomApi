@@ -27,8 +27,9 @@ export default StyleSheet.create({
         fontSize: 14
     },
 
-    email: {
-        fontSize: 10
+    skill: {
+        fontSize: 10,
+        color: "#8B6914"
     },
 
     phone: {

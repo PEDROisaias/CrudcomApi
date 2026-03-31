@@ -1,11 +1,10 @@
 {
-    "people": [
+    "colonos": [
         {
             "id": 1,
             "firstName": "Rafael",
             "lastName": "Cruz",
-            "email": "rafael@email.com.br",
-            "phone": 999999999
+            "skill": "Mining"
         }
     ]
 }

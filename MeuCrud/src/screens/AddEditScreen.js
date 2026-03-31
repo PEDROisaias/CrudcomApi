@@ -1,28 +1,26 @@
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import { View, TextInput, Button } from "react-native";
-
+import { createcolono, updatecolono } from "../servers/colonosCrud";
 import styles from "../styles/styles";
-
-import { createPerson, updatePerson } from "../servers/peopleCrud";
 
 export default function AddEditScreen({ route, navigation }) {
     
-    const person = route.params?.person;
+    const colono = route.params?.colono;
 
-    const [firstName, setFirstName] = useState(person?.firstName || "");
-    const [lastName, setLastName] = useState(person?.lastName || "");
-    const [email, setEmail] = useState(person?.email || "");
+    const [firstName, setFirstName] = useState(colono?.firstName || "");
+    const [lastName, setLastName] = useState(colono?.lastName || "");
+    const [skill, setSkill] = useState(colono?.skill || "");
 
     async function save() {
         
-        const data = { firstName, lastName, email };
+        const data = { firstName, lastName, skill };
 
-        if (person) {
+        if (colono) {
             
-            await updatePerson(person.id, data);
+            await updatecolono(colono.id, data);
         }
         else {
-            await createPerson(data);
+            await createcolono(data);
         }
 
         navigation.goBack();
@@ -44,9 +42,9 @@ export default function AddEditScreen({ route, navigation }) {
             />
 
             <TextInput
-            placeholder="Email"
-            value={email}
-            onChangeText={setEmail}
+            placeholder="Skill"
+            value={skill}
+            onChangeText={setSkill}
             />
 
             <Button

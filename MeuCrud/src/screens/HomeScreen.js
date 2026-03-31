@@ -1,87 +1,43 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, FlatList, Button } from "react-native";
-
+import { getColonos } from "../servers/colonosCrud";
 import styles from "../styles/styles";
-
-import { getPeople, deletePerson } from "../servers/peopleCrud";
 
 export default function HomeScreen({ navigation }) {
 
-    // estado da lista 
-    const [people, setPeople] = useState([]);
+    const [colonos, setColonos] = useState([]);
 
-    // função para carregar dados
-    async function loadPeople() {
-        const data = await getPeople();
-
-        setPeople(data);
+    async function loadColonos() {
+        const data = await getColonos();
+        setColonos(data);
     }
 
-    // executa ao abrir a tela
     useEffect(() => {
-        loadPeople();
+        loadColonos();
     }, []);
 
     return (
 
         <View style={styles.container}>
 
-            <Text style={styles.title}> Pessoas </Text>
+            <Text style={styles.title}> Gerenciar Colonia </Text>
             <Button
-                title="Adicionar Pessoa"
+                title="Adicionar Colono"
                 onPress={() => navigation.navigate("AddEdit")}
             />
 
             <FlatList
-                data={people}
+                data={colonos}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
-                    <CardPersonal
+                    <CardColono
                         item={item}
                         navigation={navigation}
-                        refresh={loadPeople}
+                        refresh={loadColonos}
                     />
                 )}
             />
 
         </View>
     );
-}
-
-function CardPersonal({ item, navigation, refresh }) {
-
-    return (
-
-        <View style={styles.card}>
-
-            <View>
-
-                <Text style={styles.name}>
-                    {item.firstName} {item.lastName}
-                </Text>
-
-                <Text style={styles.email}>
-                    {item.email}
-                </Text>
-
-            </View>
-
-            <View>
-
-                <Button
-                title="Editar"
-                onPress={() => navigation.navigate("AddEdit", {person:item})}
-                />
-
-                <Button
-                title="Deletar"
-                onPress={async() => {
-                    await deletePerson(item.id);
-                    refresh();
-                }}
-                />
-                
-            </View>
-        </View>
-    )
 }
